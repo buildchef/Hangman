@@ -91,7 +91,6 @@ class Game:
                 self.board()
                 print()
                 print(self.blink)
-                print(self.word)
                 print(f'You still have: {self.chances} attempts')
                 print(f'Letters already tried: {self.tried}')
                 self.validate_hit()
