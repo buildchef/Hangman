@@ -1,6 +1,7 @@
 #-- My imports
 import word_logic
 from board import Board
+from letterError import LetterError 
 
 #-- Python imports
 import os
@@ -15,6 +16,7 @@ class Game:
         self.still = True
         self.win_lose = ''
         self.game_board = Board()
+        self.tried = []
 
     def validate_end(self):
         """Function that validates if the game has reached the end"""
@@ -43,12 +45,27 @@ class Game:
         """Function that validate if the player got a letter right"""
         #-- Receive a letter from the user
         letter_ = input('Enter a letter: ')
+
+        #-- Dfensive Programming: Checking possible inconsistencies
+        #-- Checking if there is more than one character
+        if len(letter_) > 1:
+            raise LetterError('ERROR: Enter only one letter. Press enter to continue.')
+        
+        #-- Checking if the player sent a number
+        if letter_.isdigit():
+            raise LetterError('ERROR: Enter only letters. Press enter to continue.')
+
+        #-- Checking if the sent letter has already been tried
+        if letter_ in self.tried:
+            raise LetterError('ERROR: Letter already tried. Press enter to continue.')
+
         #-- Calls the 'validate_letter' to te letter sent by the player
         validate = word_logic.validate_letter(letter_, self.word, self.blink)
 
         #-- Checks if the player didin't hit 
         if validate == self.blink:
             self.chances -= 1
+            self.tried.append(letter_)
         
         #-- If the player got it right, assign the new String to the 'blink' variable
         else:
@@ -70,14 +87,20 @@ class Game:
         """Function that sews all the material created and runs the game"""
         #-- Creates a repeating loop that will run until the game is over  
         while self.still == True:
-            self.board()
-            print()
-            print(self.blink)
-            print(self.word)
-            print(f'You still have: {self.chances} attempts')
-            self.validate_hit()
-            self.validate_end()
-            self.validate_win()
+            try:
+                self.board()
+                print()
+                print(self.blink)
+                print(self.word)
+                print(f'You still have: {self.chances} attempts')
+                print(f'Letters already tried: {self.tried}')
+                self.validate_hit()
+                self.validate_end()
+                self.validate_win()
+
+            except LetterError as error:
+                print(f'{error.__class__.__name__} : {error}')
+                input()
 
         self.board()
         self.print_end()
