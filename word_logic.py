@@ -11,7 +11,7 @@ def blink_word(word):
     foo = []
     for letter in word:
         foo.append('*')
-        
+
     blink = ''.join(foo)
     return blink
 
@@ -38,8 +38,11 @@ def validate_letter(letter, word, blin):
             if sum in list_index:
                 new_list.append(letter)
             else:
-                new_list.append('*')
+                new_list.append(_)
 
         #-- Finally, we transform the modified list in a string and return that.
         blin = ''.join(new_list)
         return blin
+    else:
+        return blin
+
