@@ -1,4 +1,5 @@
 class Board:
+    """Class responsible for printing the gallows according to the number of remaining attempts"""
     def print_board(self, attempts):
         if attempts == 6:
             print('                 ')

@@ -45,4 +45,3 @@ def validate_letter(letter, word, blin):
         return blin
     else:
         return blin
-
