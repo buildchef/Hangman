@@ -1,26 +1,21 @@
 import random
 #-- https://docs.python.org/3/library/random.html
 
-import os
-#-- https://docs.python.org/3/library/os.html
- 
-os.system('cls')
-
-
 with open('random_words.txt', 'r') as file:
     """Opening the file that store our words."""
     list_ = file.read().split()
     rand_word = random.choice(list_)
 
-def blink_word():
+def blink_word(word):
     """Function that create a string of '*' with the same size of the sorted word"""
     foo = []
-    for letter in rand_word:
+    for letter in word:
         foo.append('*')
+        
     blink = ''.join(foo)
     return blink
 
-def validate(letter, word, blin):
+def validate_letter(letter, word, blin):
     """Function to validate if a certain letter exists in the drawn word """
     #-- if the chosen letter is in word...
     if letter in word:
@@ -48,8 +43,3 @@ def validate(letter, word, blin):
         #-- Finally, we transform the modified list in a string and return that.
         blin = ''.join(new_list)
         return blin
-
-
-if __name__ == '__main__':
-    #-- testing the new function
-    print(validate('b', 'banana', '******'))
